@@ -2,6 +2,8 @@
 ---
 ## News
 - 2022/08/03 launch this project
+- 2022/08/04 create db
+-            create problem CRUD and boostrap
 
 ---
 ## About
@@ -39,10 +41,14 @@
 ## MileStone
 - deadline: 2022/8/15(2week)
 
+1. databaseの作成 (8/4)
+1. 一覧ページの作成(index.html)(8/4)
+1. 問題を入力して一覧ページに表示させる(8/4)
+1. 問題を編集可能(8/4)
+1. 問題を削除可能(8/4)
+1. 問題の詳細ページ(show.html)
 1. ログイン
-2. 問題CRUD
-3. 
-4.
+
 
 ---
 ## For

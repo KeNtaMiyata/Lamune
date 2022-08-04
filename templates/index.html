@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    index
+{% endblock %}
+
+{% block main %}
+    <h2>index</h2>
+    <a href="/new">new</a>
+    <div class="row">
+        <table class="table table-striped text-start">
+            <thead>
+                <tr>
+                    <th style="width: 5%">created_at</th>
+                    <th style="width: 5%">last_time</th>
+                    <th style="width: 10%">title</th>
+                    <th style="width: 5%">stage</th>
+                    <th style="width: 40%">body</th>
+                    <th style="width: 25%">answer</th>
+                    <th style="width: 5%"></th>
+                    <th style="width: 5%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for problem in problems %}
+                <tr>
+                    <th>{{ problem.created_at }}</th>
+                    <th>{{ problem.last_time }}</th>
+                    <th>{{ problem.title }}</th>
+                    <th>{{ problem.stage }}</th>
+                    <th>{{ problem.body }}</th>
+                    <th>{{ problem.answer }}</th>
+                    <th><a class="btn btn-success" href="/{{ problem.id }}/update">update</a></th>
+                    <th><a class="btn btn-danger" href="/{{ problem.id }}/delete">delete</a></th>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

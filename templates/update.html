@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    update
+{% endblock %}
+
+{% block main %}
+    <h2>update</h2>
+    <div class="row">
+        <form action="/{{ problem.id }}/update" method="POST" class="mx-auto w-75 text-start">
+            <div class="mb-3">
+                <label class="form-label">Title</label>
+                <input autocomplete="off" autofocus class="form-control w-auto" id="title" name="title" placeholder="Title" type="text" value={{ problem.title }}>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Text of Problem</label>
+                <textarea class="form-control w-100" name="body" type="text" rows="4"> {{ problem.body }}</textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Text of Answer</label>
+                <textarea class="form-control w-100" name="answer" type="text" rows="4" > {{ problem.answer }}</textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">Update</button>
+        </form>
+    </div>
+    
+{% endblock %}
