@@ -46,6 +46,21 @@
 1. 問題を入力して一覧ページに表示させる(8/4)
 1. 問題を編集可能(8/4)
 1. 問題を削除可能(8/4)
+1. flask runの自動更新機能(8/5)
+
+    ```
+    terminal
+
+    flask run --debugger --reload
+    ```
+    - or
+    ```
+    app.py
+
+    # Ensure templates are auto-reloaded
+        app.config["TEMPLATES_AUTO_RELOAD"] = True
+    ```
+
 1. 問題の詳細ページ(show.html)
 1. ログイン
 1. nav bar
