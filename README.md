@@ -47,7 +47,6 @@
 1. 問題を編集可能(8/4)
 1. 問題を削除可能(8/4)
 1. flask runの自動更新機能(8/5)
-
     ```
     terminal
 
@@ -60,12 +59,17 @@
     # Ensure templates are auto-reloaded
         app.config["TEMPLATES_AUTO_RELOAD"] = True
     ```
-
-1. 問題の詳細ページ(show.html)
-1. ログイン
+1. ログイン(8/6)
+1. apologyの完成(8/7)
+1. top ページ(8/7)
+1. indexページの長い文章を少しだけ表示させる機能(8/7)
+1. mypageページ 自分が作った問題だけを表示させる(8/7)
+1. 問題の詳細ページ(show.html)(8/7)
+1. 忘却曲線の関数(8/8)
+1. task ページ(8/8)
+1. nav bar(8/9)
 1. passwordへのセキュリティ
     - ソルト、ハッシュ、ストレッチング
-1. nav bar
 1. ...
 
 
@@ -75,7 +79,6 @@
 - 資格の勉強
 - cs50 finalproject(personal)
 
-
 ---
 ## Language
 
@@ -84,7 +87,6 @@
 - SQLite
 - html/css
 - javascript
-
 
 ---
 this project is 
