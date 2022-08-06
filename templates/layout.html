@@ -11,18 +11,36 @@
     </head>
 
     <body>
-        <header>
+        <div class="container-fluid">
+            
+            <div class="row">
+                <header>
+                    <nav class="nav-bar navbar-expand-lg navbar-light bg-secondary">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                            </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav px-3">
+                                <li class="nav-item mx-2"><a class ="nav-link text-light" href="/">Problems</a></li>
+                                <!-- <li class="nav-itemk mx-2"><a class ="nav-link text-light" href=""></a></li> -->
+                            </ul>
+                        </div>
+                    </nav>
+                </header>
+            </div>
+                    
+            <div class="row">
+                <main class="text-center">
+                    {% block main %}{% endblock %}
+                </main>
+            </div>
 
-        </header>
+            <div class="row">            
+                <footer>
         
-        <main class="container-fluid text-center">
-            {% block main %}{% endblock %}
-        </main>
-        
+                </footer>
+            </div>
 
-        <footer>
-
-        </footer>
-
+        </div>    
     </body>
 </html>
