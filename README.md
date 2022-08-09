@@ -5,6 +5,7 @@
 - 2022/08/04 create db
 -            create problem CRUD and boostrap
 
+
 ---
 ## About
 
@@ -60,9 +61,9 @@
         app.config["TEMPLATES_AUTO_RELOAD"] = True
     ```
 1. ログイン(8/6)
-1. apologyの完成(8/7)
-1. top ページ(8/7)
-1. indexページの長い文章を少しだけ表示させる機能(8/7)
+1. apologyの完成(8/10)
+1. top ページ(8/10)
+1. indexページの長い文章を少しだけ表示させる機能(8/10)
 1. mypageページ 自分が作った問題だけを表示させる(8/7)
 1. 問題の詳細ページ(show.html)(8/7)
 1. 忘却曲線の関数(8/8)

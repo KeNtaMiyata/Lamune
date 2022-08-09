@@ -30,14 +30,12 @@
                     <th>{{ problem.stage }}</th>
                     <th>
                         <script>
-                            let body = {{ problem.body | tojson }};
-                            long_text(body);
+                            long_text({{ problem.body | tojson }});
                         </script>
                     </th>
                     <th>
                         <script>
-                            let answer = {{ problem.answer | tojson }};
-                            long_text(answer);
+                            long_text({{ problem.answer | tojson }});
                         </script>
                     </th>
                     <th><a class="btn btn-success" href="/{{ problem.id }}/update">update</a></th>
