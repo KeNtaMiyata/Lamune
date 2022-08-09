@@ -1,13 +1,12 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    index4
+    index5
 {% endblock %}
 
 {% block main %}
-
     <h2>index</h2>
-    <a href="/new">new</a>
+    <a href="/{{ user.id }}/new">new</a>
         <table class="table table-striped text-start">
             <thead>
                 <tr>
@@ -38,8 +37,8 @@
                             long_text({{ problem.answer | tojson }});
                         </script>
                     </th>
-                    <th><a class="btn btn-success" href="/{{ problem.id }}/update">update</a></th>
-                    <th><a class="btn btn-danger" href="/{{ problem.id }}/delete">delete</a></th>
+                    <th><a class="btn btn-success" href="/{{ user.id }}/{{ problem.id }}/update">update</a></th>
+                    <th><a class="btn btn-danger" href="/{{ user.id }}/{{ problem.id }}/delete">delete</a></th>
                 </tr>
                 {% endfor %}
             </tbody>

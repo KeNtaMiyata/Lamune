@@ -7,7 +7,7 @@
 {% block main %}
     <h2>new</h2>
     <div class="row">
-        <form action="/new" method="POST" class="mx-auto w-75 text-start">
+        <form action="/{{ user.id }}/new" method="POST" class="mx-auto w-75 text-start">
             <div class="mb-3">
                 <label class="form-label">Title</label>
                 <input autocomplete="off" autofocus class="form-control w-auto" id="title" name="title" placeholder="Title" type="text">
