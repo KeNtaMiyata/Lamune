@@ -11,5 +11,8 @@ a{
 body{
     width: 90%;
     margin: 0 auto;
+}
 
+.long_text{
+    white-space: pre-wrap; /*Textareaで保存したテキストの改行を表示させる方法 */
 }

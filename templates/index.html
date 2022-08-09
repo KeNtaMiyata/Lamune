@@ -28,13 +28,22 @@
                     <th>{{ problem.last_time }}</th>
                     <th>{{ problem.title }}</th>
                     <th>{{ problem.stage }}</th>
-                    <th>{{ problem.body }}</th>
-                    <th>{{ problem.answer }}</th>
+                    <th>
+                        <script>
+                            let body = {{ problem.body | tojson }};
+                            long_text(body);
+                        </script>
+                    </th>
+                    <th>
+                        <script>
+                            let answer = {{ problem.answer | tojson }};
+                            long_text(answer);
+                        </script>
+                    </th>
                     <th><a class="btn btn-success" href="/{{ problem.id }}/update">update</a></th>
                     <th><a class="btn btn-danger" href="/{{ problem.id }}/delete">delete</a></th>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
-
 {% endblock %}
