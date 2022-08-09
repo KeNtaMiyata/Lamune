@@ -34,3 +34,17 @@ p {
 
 https://cpoint-lab.co.jp/article/201805/2856/
 
+
+FlaskでJavaScriptに変数を渡す方法。
+
+```
+<script>
+    function test_click(){
+        let list_data = {{ input_from_python | tojson }};
+        alert(list_data)
+    };
+</script>
+```
+引き渡した変数を「let list_data = {{ input_from_python | tojson }};」部分で
+JacvaScriptが使用できるJson形式に変形し、その取得したものをalertとして表示させています。
+

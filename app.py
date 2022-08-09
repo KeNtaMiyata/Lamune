@@ -7,6 +7,7 @@ from datetime import datetime
 import os
 import pytz
 
+from helpers import apology
 
 app = Flask(__name__)
 
@@ -51,11 +52,19 @@ def top():
     return render_template("top.html")
 
 
-@app.route("/index", methods=["GET"])
+@app.route("/<int:user_id>/index", methods=["GET"])
 @login_required
-def index():
-    problems = Problem.query.all()
-    return render_template("index.html", problems=problems)
+def mypage(user_id):
+    my_problems = Problem.query.filter_by(user_id=user_id).all()
+    user = current_user
+    return render_template("index.html", problems=my_problems, user=user)
+
+
+# @app.route("/index", methods=["GET"])
+# @login_required
+# def index():
+#     problems = Problem.query.all()
+#     return render_template("index.html", problems=problems)
 
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -64,29 +73,29 @@ def signup():
 
         # check blank or not
         if not request.form.get("username"):
-            return redirect("/signup")
-            # return apology("must provide username", 403)
+            # return redirect("/signup")
+            return apology("must provide username", 403)
 
         elif not request.form.get("password"):
-            return redirect("/signup")
-            # return apology("must provide password", 403)
+            # return redirect("/signup")
+            return apology("must provide password", 403)
 
         elif not request.form.get("confirmation"):
-            return redirect("/signup")
-            # return apology("must provide password", 403)
+            # return redirect("/signup")
+            return apology("must provide password", 403)
 
         name = request.form.get("username")
         password = request.form.get("password")
         confirmation = request.form.get("confirmation")
 
         if password != confirmation:
-            return redirect("/signup")
-            # return apology("Password and confirmation are not same", 400)
+            # return redirect("/signup")
+            return apology("Password and confirmation are not same", 400)
 
         users = User.query.all()
         if name in [person.name for person in users]:
-            return redirect("/signup")
-            # return apology("The name is already used by someone", 400)
+            # return redirect("/signup")
+            return apology("The name is already used by someone", 400)
 
         user = User(name=name, password=generate_password_hash(
             password, method="sha256"))
@@ -106,13 +115,13 @@ def login():
         # check blank or not
         if not request.form.get("username"):
             print(1)
-            return redirect("/signup")
-            # return apology("must provide username", 403)
+            # return redirect("/signup")
+            return apology("must provide username", 403)
 
         elif not request.form.get("password"):
             print(2)
-            return redirect("/signup")
-            # return apology("must provide password", 403)
+            # return redirect("/signup")
+            return apology("must provide password", 403)
 
         name = request.form.get("username")
         password = request.form.get("password")
@@ -120,9 +129,10 @@ def login():
         user = User.query.filter_by(name=name).first()
         if check_password_hash(user.password, password):
             login_user(user)
-            return redirect("/index")
+            user_id=user.id
+            return redirect(f"/{ user_id }/index")
 
-        return redirect("/login")
+        return apology("foo", 403)
 
     else:
         return render_template("login.html")
@@ -135,24 +145,24 @@ def logout():
     return redirect('/login')
 
 
-@app.route('/new', methods=["GET", "POST"])
+@app.route('/<int:user_id>/new', methods=["GET", "POST"])
 @login_required
-def new():
+def new(user_id):
     if request.method == "POST":
 
         if not request.form.get("title"):
             print(1)
-            return redirect("/new")
+            return apology("foo", 403)
 
         elif not request.form.get("body"):
             print(2)
-            return redirect("/new")
+            return apology("foo", 403)
 
         elif not request.form.get("answer"):
             print(3)
-            return redirect("/new")
+            return apology("foo", 403)
 
-        user_id = current_user.id
+        # user_id = current_user.id
         title = request.form.get("title")
         body = request.form.get("body")
         answer = request.form.get("answer")
@@ -163,34 +173,49 @@ def new():
         db.session.add(problem)
         db.session.commit()
 
-        return redirect("/index")
+        return redirect(f"/{ user_id }/index")
 
     else:
-        return render_template("new.html")
+        user = current_user
+        return render_template("new.html", user=user)
 
 
-@app.route('/<int:id>/update', methods=["GET", "POST"])
+@app.route('/<int:user_id>/<int:problem_id>/update', methods=["GET", "POST"])
 @login_required
-def update(id):
-    problem = Problem.query.get(id)
+def update(user_id, problem_id):
+    problem = Problem.query.get(problem_id)
 
     if request.method == "POST":
+
+        if not request.form.get("title"):
+            print(1)
+            return apology("foo", 403)
+
+        elif not request.form.get("body"):
+            print(2)
+            return apology("foo", 403)
+
+        elif not request.form.get("answer"):
+            print(3)
+            return apology("foo", 403)
+
         problem.title = request.form.get("title")
         problem.body = request.form.get("body")
         problem.answer = request.form.get("answer")
 
         db.session.commit()
 
-        return redirect("/index")
+        return redirect(f"/{ user_id }/index")
 
     else:
-        return render_template("update.html", problem=problem)
+        user = current_user
+        return render_template("update.html", problem=problem, user=user)
 
 
-@app.route('/<int:id>/delete', methods=["GET"])
+@app.route('/<int:user_id>/<int:problem_id>/delete', methods=["GET"])
 @login_required
-def delete(id):
-    problem = Problem.query.get(id)
+def delete(user_id, problem_id):
+    problem = Problem.query.get(problem_id)
     db.session.delete(problem)
     db.session.commit()
-    return redirect("/index")
+    return redirect(f"/{ user_id }/index")
