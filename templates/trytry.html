@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    TryTry
+{% endblock %}
+
+{% block main%}
+<h2>Try</h2>
+
+
+<p>{{ problem.last_time }}</p>
+
+
+<p>{{ problem.title }}</p>
+
+
+<!-- スタートボタンをおしたら以下が表示される -->
+<p>{{ problem.body }}</p>
+
+<!-- finishボタンを押したら以下が表示 -->
+<!-- 経過時間を表示 -->
+<input type="button" value="Show or Hide Answer" onclick="show_answer()" />
+<textarea id="show_answer" class="w-100" rows="4">{{ problem.answer }}</textarea>
+
+{% endblock %}
+
+
+{% block js %}
+<script>
+    document.getElementById("show_answer").style.display ="none";
+    
+    function show_answer(){
+    const answer = document.getElementById("show_answer");
+    if(answer.style.display=="block"){
+        // noneで非表示
+        answer.style.display ="none";
+    }else{
+        // blockで表示
+        answer.style.display ="block";
+    }
+}
+</script>
+{% endblock %}
+
+

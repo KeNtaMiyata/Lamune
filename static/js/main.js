@@ -3,12 +3,12 @@ function long_text(text){
     document.write(slicetext);
 }
 
-jquery(function($){
+// jquery(function($){
 
-    $("tr[data-href").addClass("clickable").on("click", function(e){
-        if (!$(e.target).is('a')) {
-            window.location = $(e.target).closest.data('href');
-        }
-    });
-});
+//     $("tr[data-href").addClass("clickable").on("click", function(e){
+//         if (!$(e.target).is('a')) {
+//             window.location = $(e.target).closest.data('href');
+//         }
+//     });
+// });
 

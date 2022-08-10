@@ -218,3 +218,11 @@ def delete(user_id, problem_id):
     db.session.delete(problem)
     db.session.commit()
     return redirect(f"/{ user_id }/index")
+
+
+@app.route('/<int:user_id>/<int:problem_id>/trytry', methods=["GET"])
+@login_required
+def trytry(user_id, problem_id):
+    problem = Problem.query.get(problem_id)
+    return render_template("trytry.html", problem=problem)
+
