@@ -7,40 +7,38 @@
 {% block main %}
     <h2>index</h2>
     <a href="/{{ user.id }}/new">new</a>
-        <table class="table table-striped text-start">
-            <thead>
-                <tr>
-                    <th style="width: 5%">created_at</th>
-                    <th style="width: 5%">last_time</th>
-                    <th style="width: 10%">title</th>
-                    <th style="width: 5%">stage</th>
-                    <th style="width: 40%">body</th>
-                    <th style="width: 25%">answer</th>
-                    <th style="width: 5%"></th>
-                    <th style="width: 5%"></th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for problem in problems %}
-                <tr>
-                    <th>{{ problem.created_at }}</th>
-                    <th>{{ problem.last_time }}</th>
-                    <th>{{ problem.title }}</th>
-                    <th>{{ problem.stage }}</th>
-                    <th>
-                        <script>
-                            long_text({{ problem.body | tojson }});
-                        </script>
-                    </th>
-                    <th>
-                        <script>
-                            long_text({{ problem.answer | tojson }});
-                        </script>
-                    </th>
-                    <th><a class="btn btn-success" href="/{{ user.id }}/{{ problem.id }}/update">update</a></th>
-                    <th><a class="btn btn-danger" href="/{{ user.id }}/{{ problem.id }}/delete">delete</a></th>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <table class="table table-striped text-start index">
+        <thead>
+            <tr>
+                <th style="width: 5%">created_at</th>
+                <th style="width: 5%">last_time</th>
+                <th style="width: 20%">title</th>
+                <th style="width: 5%">stage</th>
+                <th style="width: 30%">body</th>
+                <th style="width: 10%">answer</th>
+                <th style="width: 15%">detail</th>
+                <th style="width: 5%">edit</th>
+                <th style="width: 5%">delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for problem in problems %}
+            <tr data-href="/{{ user.id }}/{{ problem.id }}">
+                <td>{{ problem.created_at }}</td>
+                <td>{{ problem.last_time }}</td>
+                <td>{{ problem.title }}</td>
+                <td>{{ problem.stage }}</td>
+                <td>
+                    <script>
+                        long_text({{ problem.body | tojson }});
+                    </script>
+                </td>
+                <td>...</td>
+                <td><a class="btn btn-primary" href="/{{ user.id }}/{{ problem.id }}">To detail</a></td>
+                <td><a class="btn btn-success" href="/{{ user.id }}/{{ problem.id }}/update">update</a></td>
+                <td><a class="btn btn-danger" href="/{{ user.id }}/{{ problem.id }}/delete">delete</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

@@ -16,3 +16,9 @@ body{
 .long_text{
     white-space: pre-wrap; /*Textareaで保存したテキストの改行を表示させる方法 */
 }
+
+ /* ▼リンクの上にマウスが載った際の装飾(背景色だけ指定) */
+.index tr.clickable:hover td {
+    background-color: #fcfcaa;
+    cursor: pointer;
+}

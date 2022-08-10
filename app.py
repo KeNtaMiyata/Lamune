@@ -1,12 +1,10 @@
 from flask import Flask, redirect, render_template, request, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required, current_user
-
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime
 import os
 import pytz
-
 from helpers import apology
 
 app = Flask(__name__)
@@ -50,21 +48,6 @@ class Problem(db.Model):
 @app.route("/", methods=["GET"])
 def top():
     return render_template("top.html")
-
-
-@app.route("/<int:user_id>/index", methods=["GET"])
-@login_required
-def mypage(user_id):
-    my_problems = Problem.query.filter_by(user_id=user_id).all()
-    user = current_user
-    return render_template("index.html", problems=my_problems, user=user)
-
-
-# @app.route("/index", methods=["GET"])
-# @login_required
-# def index():
-#     problems = Problem.query.all()
-#     return render_template("index.html", problems=problems)
 
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -129,7 +112,7 @@ def login():
         user = User.query.filter_by(name=name).first()
         if check_password_hash(user.password, password):
             login_user(user)
-            user_id=user.id
+            user_id = user.id
             return redirect(f"/{ user_id }/index")
 
         return apology("foo", 403)
@@ -143,6 +126,14 @@ def login():
 def logout():
     logout_user()
     return redirect('/login')
+
+
+@app.route("/<int:user_id>/index", methods=["GET"])
+@login_required
+def mypage(user_id):
+    my_problems = Problem.query.filter_by(user_id=user_id).all()
+    user = current_user
+    return render_template("index.html", problems=my_problems, user=user)
 
 
 @app.route('/<int:user_id>/new', methods=["GET", "POST"])
@@ -178,6 +169,14 @@ def new(user_id):
     else:
         user = current_user
         return render_template("new.html", user=user)
+
+
+@app.route('/<int:user_id>/<int:problem_id>', methods=["GET"])
+@login_required
+def show(user_id, problem_id):
+    problem = Problem.query.get(problem_id)
+    user = current_user
+    return render_template("show.html", problem=problem, user=user)
 
 
 @app.route('/<int:user_id>/<int:problem_id>/update', methods=["GET", "POST"])
