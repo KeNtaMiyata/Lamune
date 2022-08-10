@@ -92,3 +92,22 @@ function(e)
 https://twotone.me/web/4161/
 
 
+
+TypeError: can't subtract offset-naive and offset-aware datetimes
+
+
+import datetime
+
+d1 = datetime.datetime.now(datetime.timezone.utc) # datetime.datetime(2021, 2, 24, 4, 30, 6, 598645, tzinfo=datetime.timezone.utc)
+
+d2 = datetime.datetime.utcnow()                   # datetime.datetime(2021, 2, 24, 4, 30, 14, 29200)
+
+
+diff = d2 - d1  # TypeError: can't subtract offset-naive and offset-aware datetim
+You can either remove timzeone info
+
+diff = d2 - d1.replace(tzinfo=None) 
+Or add timezone info
+
+diff = d2.replace(tzinfo=datetime.timezone.utc) - d1
+

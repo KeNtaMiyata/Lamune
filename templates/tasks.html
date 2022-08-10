@@ -1,13 +1,12 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    index5
+    Task
 {% endblock %}
 
 {% block main %}
-    <h2>index</h2>
-    <a href="/{{ user.id }}/new">new</a>
-    <a href="/{{ user.id }}/tasks">task</a>
+    <h2>Task</h2>
+    <a href="/{{ user.id }}/index">index</a>
     <table class="table table-striped text-start index">
         <thead>
             <tr>
@@ -17,9 +16,7 @@
                 <th style="width: 5%">stage</th>
                 <th style="width: 30%">body</th>
                 <th style="width: 10%">answer</th>
-                <th style="width: 15%">detail</th>
-                <th style="width: 5%">edit</th>
-                <th style="width: 5%">delete</th>
+                <th style="width: 15%">to try</th>
             </tr>
         </thead>
         <tbody>
@@ -35,9 +32,7 @@
                     </script>
                 </td>
                 <td>...</td>
-                <td><a class="btn btn-primary" href="/{{ user.id }}/{{ problem.id }}">To detail</a></td>
-                <td><a class="btn btn-success" href="/{{ user.id }}/{{ problem.id }}/update">update</a></td>
-                <td><a class="btn btn-danger" href="/{{ user.id }}/{{ problem.id }}/delete">delete</a></td>
+                <td><a class="btn btn-primary" href="/{{ user.id }}/{{ problem.id }}/trytry">To Trytry</a></td>
             </tr>
             {% endfor %}
         </tbody>

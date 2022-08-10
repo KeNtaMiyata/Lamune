@@ -8,7 +8,7 @@
 <h2>Try</h2>
 
 
-<p>{{ problem.last_time }}</p>
+<p>最後に解いた日　{{ problem.last_time }}</p>
 
 
 <p>{{ problem.title }}</p>
@@ -17,10 +17,24 @@
 <!-- スタートボタンをおしたら以下が表示される -->
 <p>{{ problem.body }}</p>
 
-<!-- finishボタンを押したら以下が表示 -->
+<!-- ボタンを押したら以下が表示 -->
 <!-- 経過時間を表示 -->
 <input type="button" value="Show or Hide Answer" onclick="show_answer()" />
 <textarea id="show_answer" class="w-100" rows="4">{{ problem.answer }}</textarea>
+
+<form action="/{{ user.id }}/{{ problem.id }}/trytry" method="POST" class="mx-auto w-75 text-start">
+    <div class="form-check mb-3">
+        <input class="form-check-input" name="result" type="radio" value="Correct" checked>
+        <label class="form-check-label">Correct</label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" name="result" type="radio" value="Incorrect">
+        <label class="form-check-label">Incorrect</label>
+    </div>
+    <div class="mb-3">
+        <button class="btn btn-primary" type="submit" >Submit</button>
+    </div>
+</form>
 
 {% endblock %}
 

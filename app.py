@@ -2,7 +2,7 @@ from flask import Flask, redirect, render_template, request, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
-from datetime import datetime
+import datetime
 import os
 import pytz
 from helpers import apology
@@ -11,15 +11,14 @@ app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lamune.db'
 app.config['SECRET_KEY'] = os.urandom(24)
-# Ensure templates are auto-reloaded
-app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.config["TEMPLATES_AUTO_RELOAD"] = True # Ensure templates are auto-reloaded
 
 db = SQLAlchemy(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-
+# models
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(15), nullable=False, unique=True)
@@ -40,11 +39,30 @@ class Problem(db.Model):
     answer = db.Column(db.String(500), nullable=False)
     stage = db.Column(db.Integer, default=0)
     last_time = db.Column(db.DateTime, nullable=False,
-                          default=datetime.now(pytz.timezone('Asia/Tokyo')))
+                          default=datetime.datetime.now(pytz.timezone('Asia/Tokyo')))
     created_at = db.Column(db.DateTime, nullable=False,
-                           default=datetime.now(pytz.timezone('Asia/Tokyo')))
+                           default=datetime.datetime.now(pytz.timezone('Asia/Tokyo')))
 
 
+# stage passed time list
+stage_list=[
+    datetime.timedelta(seconds=1),
+    datetime.timedelta(seconds=15),
+    datetime.timedelta(seconds=15),
+    datetime.timedelta(seconds=20),
+    # datetime.timedelta(hours=3),
+    # datetime.timedelta(days=1),
+    # datetime.timedelta(days=3),
+    # datetime.timedelta(days=7),
+    # datetime.timedelta(days=10),
+    # datetime.timedelta(days=15),
+    # datetime.timedelta(days=20),
+    # datetime.timedelta(days=30)
+    ]
+
+max_stage = len(stage_list) - 1
+
+# routing
 @app.route("/", methods=["GET"])
 def top():
     return render_template("top.html")
@@ -220,9 +238,44 @@ def delete(user_id, problem_id):
     return redirect(f"/{ user_id }/index")
 
 
-@app.route('/<int:user_id>/<int:problem_id>/trytry', methods=["GET"])
+@app.route('/<int:user_id>/<int:problem_id>/trytry', methods=["GET", "POST"])
 @login_required
 def trytry(user_id, problem_id):
-    problem = Problem.query.get(problem_id)
-    return render_template("trytry.html", problem=problem)
+    if request.method == "POST":
+        problem = Problem.query.get(problem_id)
+        
+        problem.last_time = datetime.datetime.now(pytz.timezone('Asia/Tokyo'))
+        result = request.form.get("result")
+        if result == "Correct":
+            if problem.stage != max_stage:
+                problem.stage += 1
+            db.session.commit()
 
+        else:
+            problem.stage = 0
+            db.session.commit()
+        
+        return redirect(f"/{user_id}/tasks")
+
+    else:
+        problem = Problem.query.get(problem_id)
+        return render_template("trytry.html", problem=problem, user=current_user)
+
+
+@app.route("/<int:user_id>/tasks", methods=["GET"])
+@login_required
+def tasks(user_id):
+    tasks=[]
+    my_problems = Problem.query.filter_by(user_id=user_id).all()
+    
+    for problem in my_problems:
+        
+        passed_time = datetime.datetime.now(pytz.timezone('Asia/Tokyo')).replace(tzinfo=None)  - problem.last_time
+        
+        if passed_time >= stage_list[problem.stage]:
+           tasks.append(problem)
+
+        else:
+            continue
+        
+    return render_template("tasks.html", problems=tasks, user=current_user)
