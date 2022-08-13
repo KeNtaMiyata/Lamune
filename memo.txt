@@ -111,3 +111,15 @@ Or add timezone info
 
 diff = d2.replace(tzinfo=datetime.timezone.utc) - d1
 
+
+ログインしているかしていないか
+{% if current_user.is_authenticated %}
+{% endif %}
+ログインしてない時はcurrent_userにAnonymousUserMixinオブジェクトがセットされ、いい感じに使える
+AnonymousUserMixinオブジェクトは以下の特徴を持つ。
+
+- is_active, is_authenticated == False
+- is_anonymous == True
+- get_id() returns None
+
+

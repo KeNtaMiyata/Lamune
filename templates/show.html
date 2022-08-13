@@ -21,17 +21,25 @@
         </thead>
         <tbody>
             <tr>
-                <td>{{ problem.created_at }}</td>
-                <td>{{ problem.last_time }}</td>
+                <td>{{ problem.created_at | show_datetime }}</td>
+                <td>{{ problem.last_time | show_datetime }}</td>
                 <td>{{ problem.title }}</td>
                 <td>{{ problem.stage }}</td>
-                <td>{{ problem.body }}</td>
+                <td class="long_text">{{ problem.body }}</td>
                 <td>...</td>
                 <td><a class="btn btn-success" href="/{{ user.id }}/{{ problem.id }}/update">update</a></td>
-                <td><a class="btn btn-danger" href="/{{ user.id }}/{{ problem.id }}/delete">delete</a></td>
+                <td><a class="btn btn-danger" href="/{{ user.id }}/{{ problem.id }}/delete" onclick="return confirm_delete()">delete</a></td>
             </tr>
         </tbody>
     </table>
 
     <a class="btn btn-dark" href="/{{ user.id }}/{{ problem.id }}/trytry">trytry</a>
+
+    <div>
+        <ul>
+            {% for history in history_list %}
+            <li>{{ history }}</li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}

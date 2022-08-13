@@ -5,13 +5,16 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import datetime
 import os
 import pytz
-from helpers import apology
+from helpers import apology, show_datetime
 
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lamune.db'
 app.config['SECRET_KEY'] = os.urandom(24)
-app.config["TEMPLATES_AUTO_RELOAD"] = True # Ensure templates are auto-reloaded
+# Ensure templates are auto-reloaded
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+
+app.jinja_env.filters["show_datetime"] = show_datetime
 
 db = SQLAlchemy(app)
 
@@ -19,6 +22,8 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 # models
+
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(15), nullable=False, unique=True)
@@ -42,10 +47,11 @@ class Problem(db.Model):
                           default=datetime.datetime.now(pytz.timezone('Asia/Tokyo')))
     created_at = db.Column(db.DateTime, nullable=False,
                            default=datetime.datetime.now(pytz.timezone('Asia/Tokyo')))
+    solved_history = db.Column(db.String)
 
 
 # stage passed time list
-stage_list=[
+stage_list = [
     datetime.timedelta(seconds=1),
     datetime.timedelta(seconds=15),
     datetime.timedelta(seconds=15),
@@ -58,14 +64,16 @@ stage_list=[
     # datetime.timedelta(days=15),
     # datetime.timedelta(days=20),
     # datetime.timedelta(days=30)
-    ]
+]
 
 max_stage = len(stage_list) - 1
 
 # routing
+
+
 @app.route("/", methods=["GET"])
 def top():
-    return render_template("top.html")
+    return render_template("top.html", user=current_user)
 
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -128,6 +136,9 @@ def login():
         password = request.form.get("password")
 
         user = User.query.filter_by(name=name).first()
+        if not user:
+            return apology("must provide valid username", 403)
+
         if check_password_hash(user.password, password):
             login_user(user)
             user_id = user.id
@@ -148,7 +159,7 @@ def logout():
 
 @app.route("/<int:user_id>/index", methods=["GET"])
 @login_required
-def mypage(user_id):
+def index(user_id):
     my_problems = Problem.query.filter_by(user_id=user_id).all()
     user = current_user
     return render_template("index.html", problems=my_problems, user=user)
@@ -194,7 +205,11 @@ def new(user_id):
 def show(user_id, problem_id):
     problem = Problem.query.get(problem_id)
     user = current_user
-    return render_template("show.html", problem=problem, user=user)
+    if problem.solved_history:
+        history_list=problem.solved_history.splitlines()
+    else:
+        history_list=[]
+    return render_template("show.html", problem=problem, user=user, history_list=history_list)
 
 
 @app.route('/<int:user_id>/<int:problem_id>/update', methods=["GET", "POST"])
@@ -243,18 +258,29 @@ def delete(user_id, problem_id):
 def trytry(user_id, problem_id):
     if request.method == "POST":
         problem = Problem.query.get(problem_id)
-        
         problem.last_time = datetime.datetime.now(pytz.timezone('Asia/Tokyo'))
+
         result = request.form.get("result")
+
         if result == "Correct":
+            if not problem.solved_history:
+                problem.solved_history = f"{show_datetime(datetime.datetime.now(pytz.timezone('Asia/Tokyo')))},Correct"
+            else:
+                problem.solved_history = f"{show_datetime(datetime.datetime.now(pytz.timezone('Asia/Tokyo')))},Correct\n{problem.solved_history}"
+
             if problem.stage != max_stage:
                 problem.stage += 1
             db.session.commit()
 
         else:
+            if not problem.solved_history:
+                problem.solved_history = f"{show_datetime(datetime.datetime.now(pytz.timezone('Asia/Tokyo')))},Incorrect"
+            else:
+                problem.solved_history = f"{show_datetime(datetime.datetime.now(pytz.timezone('Asia/Tokyo')))},Incorrect\n{problem.solved_history}"
+
             problem.stage = 0
             db.session.commit()
-        
+
         return redirect(f"/{user_id}/tasks")
 
     else:
@@ -265,17 +291,18 @@ def trytry(user_id, problem_id):
 @app.route("/<int:user_id>/tasks", methods=["GET"])
 @login_required
 def tasks(user_id):
-    tasks=[]
+    tasks = []
     my_problems = Problem.query.filter_by(user_id=user_id).all()
-    
+
     for problem in my_problems:
-        
-        passed_time = datetime.datetime.now(pytz.timezone('Asia/Tokyo')).replace(tzinfo=None)  - problem.last_time
-        
+
+        passed_time = datetime.datetime.now(pytz.timezone(
+            'Asia/Tokyo')).replace(tzinfo=None) - problem.last_time
+
         if passed_time >= stage_list[problem.stage]:
-           tasks.append(problem)
+            tasks.append(problem)
 
         else:
             continue
-        
+
     return render_template("tasks.html", problems=tasks, user=current_user)

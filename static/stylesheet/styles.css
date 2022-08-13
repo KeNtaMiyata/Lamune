@@ -11,6 +11,14 @@ a{
 body{
     width: 90%;
     margin: 0 auto;
+    background-image: url(../images/lamune_side_back.jpg);
+}
+
+
+main{
+    background-color: antiquewhite;
+    height: 90%;
+
 }
 
 .long_text{
