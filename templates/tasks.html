@@ -5,36 +5,43 @@
 {% endblock %}
 
 {% block main %}
-    <h2>Task</h2>
-    <a href="/{{ user.id }}/index">index</a>
-    <table class="table table-striped text-start index">
-        <thead>
-            <tr>
-                <th style="width: 5%">created_at</th>
-                <th style="width: 5%">last_time</th>
-                <th style="width: 20%">title</th>
-                <th style="width: 5%">stage</th>
-                <th style="width: 30%">body</th>
-                <th style="width: 10%">answer</th>
-                <th style="width: 15%">to try</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for problem in problems %}
-            <tr data-href="/{{ user.id }}/{{ problem.id }}">
-                <td>{{ problem.created_at }}</td>
-                <td>{{ problem.last_time }}</td>
-                <td>{{ problem.title }}</td>
-                <td>{{ problem.stage }}</td>
-                <td>
-                    <script>
-                        long_text({{ problem.body | tojson }});
-                    </script>
-                </td>
-                <td>...</td>
-                <td><a class="btn btn-primary" href="/{{ user.id }}/{{ problem.id }}/trytry">To Trytry</a></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="col-md-3 col-12 offset-md-1 pt-4">
+        <h2><i class="far fa-star"></i> Tasks <i class="far fa-star"></i></h2>
+    </div>
+
+    
+    <div class="col-11 mx-auto mt-5">
+        <table class="table table-striped text-start index">
+            <thead>
+                <tr>
+                    <th style="width: 10%">Creation Date</th>
+                    <th style="width: 10%">Last Tried Date</th>
+                    <th style="width: 10%">Title</th>
+                    <th style="width: 5%">Stage</th>
+                    <th style="width: 25%">Content</th>
+                    <th style="width: 10%">Answer</th>
+                    <th style="width: 15%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for problem in problems %}
+                <tr data-href="/{{ user.id }}/{{ problem.id }}">
+                    <td>{{ problem.created_at | show_datetime }}</td>
+                    <td>{{ problem.last_time | show_datetime }}</td>
+                    <td>{{ problem.title }}</td>
+                    <td>{{ problem.stage }}</td>
+                    <td>
+                        <script>
+                            long_text({{ problem.body | tojson }});
+                        </script>
+                    </td>
+                    <td>...</td>
+                    <td><a class="btn btn-outline-primary w-100" href="/{{ user.id }}/{{ problem.id }}/trytry"><i class="fab fa-angellist"></i> Try the problem</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    
 {% endblock %}

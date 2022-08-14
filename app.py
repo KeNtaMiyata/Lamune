@@ -1,6 +1,7 @@
 from flask import Flask, redirect, render_template, request, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required, current_user
+from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 import datetime
 import os
@@ -11,8 +12,12 @@ app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lamune.db'
 app.config['SECRET_KEY'] = os.urandom(24)
-# Ensure templates are auto-reloaded
-app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.config["TEMPLATES_AUTO_RELOAD"] = True # Ensure templates are auto-reloaded
+
+# Configure session to use filesystem (instead of signed cookies)
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 
 app.jinja_env.filters["show_datetime"] = show_datetime
 
@@ -21,9 +26,10 @@ db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+app.permanent_session_lifetime = datetime.timedelta(minutes=5) 
+
+
 # models
-
-
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(15), nullable=False, unique=True)
@@ -69,7 +75,15 @@ stage_list = [
 max_stage = len(stage_list) - 1
 
 # routing
+@app.errorhandler(401)
+def unauthorized(error):
+    # unauthorized error のときトップページに戻る
+    return render_template("top.html", user=current_user)
 
+@app.errorhandler(404)
+def unauthorized(error):
+    # unauthorized error のときトップページに戻る
+    return apology("top.html", 404)
 
 @app.route("/", methods=["GET"])
 def top():
@@ -114,11 +128,15 @@ def signup():
         return redirect("/login")
 
     else:
-        return render_template("signup.html")
+        return render_template("signup.html", user=current_user)
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+
+    # Forget any user_id
+    session.clear()
+
     if request.method == "POST":
 
         # check blank or not
@@ -147,7 +165,7 @@ def login():
         return apology("foo", 403)
 
     else:
-        return render_template("login.html")
+        return render_template("login.html", user=current_user)
 
 
 @app.route('/logout')
@@ -160,6 +178,9 @@ def logout():
 @app.route("/<int:user_id>/index", methods=["GET"])
 @login_required
 def index(user_id):
+    if user_id != current_user.id:
+        return apology("foo", 403)
+
     my_problems = Problem.query.filter_by(user_id=user_id).all()
     user = current_user
     return render_template("index.html", problems=my_problems, user=user)
@@ -168,6 +189,9 @@ def index(user_id):
 @app.route('/<int:user_id>/new', methods=["GET", "POST"])
 @login_required
 def new(user_id):
+    if user_id != current_user.id:
+        return apology("foo", 403)
+
     if request.method == "POST":
 
         if not request.form.get("title"):
@@ -203,7 +227,14 @@ def new(user_id):
 @app.route('/<int:user_id>/<int:problem_id>', methods=["GET"])
 @login_required
 def show(user_id, problem_id):
+    if user_id != current_user.id:
+        return apology("foo", 403)
+
     problem = Problem.query.get(problem_id)
+    # ないはずのIDをURLに手打ちした時Internal Server Error
+    if not problem:
+        return apology("no problem", 404)
+
     user = current_user
     if problem.solved_history:
         history_list=problem.solved_history.splitlines()
@@ -215,6 +246,9 @@ def show(user_id, problem_id):
 @app.route('/<int:user_id>/<int:problem_id>/update', methods=["GET", "POST"])
 @login_required
 def update(user_id, problem_id):
+    if user_id != current_user.id:
+        return apology("foo", 403)
+
     problem = Problem.query.get(problem_id)
 
     if request.method == "POST":
@@ -247,6 +281,9 @@ def update(user_id, problem_id):
 @app.route('/<int:user_id>/<int:problem_id>/delete', methods=["GET"])
 @login_required
 def delete(user_id, problem_id):
+    if user_id != current_user.id:
+        return apology("foo", 403)
+
     problem = Problem.query.get(problem_id)
     db.session.delete(problem)
     db.session.commit()
@@ -256,7 +293,10 @@ def delete(user_id, problem_id):
 @app.route('/<int:user_id>/<int:problem_id>/trytry', methods=["GET", "POST"])
 @login_required
 def trytry(user_id, problem_id):
-    if request.method == "POST":
+    if user_id != current_user.id:
+        return apology("foo", 403)
+
+    elif request.method == "POST":
         problem = Problem.query.get(problem_id)
         problem.last_time = datetime.datetime.now(pytz.timezone('Asia/Tokyo'))
 
@@ -291,6 +331,9 @@ def trytry(user_id, problem_id):
 @app.route("/<int:user_id>/tasks", methods=["GET"])
 @login_required
 def tasks(user_id):
+    if user_id != current_user.id:
+        return apology("foo", 403)
+
     tasks = []
     my_problems = Problem.query.filter_by(user_id=user_id).all()
 

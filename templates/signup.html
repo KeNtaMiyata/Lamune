@@ -6,8 +6,9 @@
 
 
 {% block main %}
+<div class="row">
     <form action="/signup" method="post">
-        <div class="my-3">
+        <div class="pt-3 mb-3">
             <input autocomplete="off" autofocus class="form-control mx-auto w-auto"
              id="username" name="username" placeholder="Username" type="text" required maxlength="10">
         </div>
@@ -24,5 +25,6 @@
 
         <button class="btn btn-primary" type="submit">Sign Up</button>
 
-    </form>    
+    </form>
+</div>   
 {% endblock %}

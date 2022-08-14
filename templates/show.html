@@ -5,41 +5,53 @@
 {% endblock %}
 
 {% block main%}
-<h2>Show</h2>
-    <table class="table table-striped text-start">
-        <thead>
-            <tr>
-                <td style="width: 5%">created_at</td>
-                <td style="width: 5%">last_time</td>
-                <td style="width: 25%">title</td>
-                <td style="width: 5%">stage</td>
-                <td style="width: 45%">body</td>
-                <td style="width: 55%">answer</td>
-                <td style="width: 5%"></td>
-                <td style="width: 5%"></td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{ problem.created_at | show_datetime }}</td>
-                <td>{{ problem.last_time | show_datetime }}</td>
-                <td>{{ problem.title }}</td>
-                <td>{{ problem.stage }}</td>
-                <td class="long_text">{{ problem.body }}</td>
-                <td>...</td>
-                <td><a class="btn btn-success" href="/{{ user.id }}/{{ problem.id }}/update">update</a></td>
-                <td><a class="btn btn-danger" href="/{{ user.id }}/{{ problem.id }}/delete" onclick="return confirm_delete()">delete</a></td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a class="btn btn-dark" href="/{{ user.id }}/{{ problem.id }}/trytry">trytry</a>
-
-    <div>
-        <ul>
-            {% for history in history_list %}
-            <li>{{ history }}</li>
-            {% endfor %}
-        </ul>
+<div class="row">
+    <div class="col-md-3 col-12 offset-md-1 mt-4">
+        <h2><i class="far fa-star"></i> Show Detail <i class="far fa-star"></i></h2>
     </div>
+
+    <div class="col-md-3 offset-md-1 mt-5 d-none d-md-block">
+        <a href="/{{ user.id }}/{{ problem.id }}/trytry" class="btn btn-outline-dark btn--radius btn--cubic d-none d-md-block"><i class="fas fa-angle-double-right fa-position-left"></i> Try This Problem <i class="fas fa-angle-double-left fa-position-right"></i></a>
+    </div>
+
+    <div class="col-11 mx-auto mt-5">
+        <table class="table table-striped text-start index">
+            <thead>
+                <tr>
+                    <th style="width: 10%">Creation Date</th>
+                    <th style="width: 10%">Last Tried Date</th>
+                    <th style="width: 5%">Stage</th>
+                    <th style="width: 10%">Title</th>
+                    <th style="width: 20%">Content</th>
+                    <th style="width: 10%">Answer</th>
+                    <th style="width: 5%"></th>
+                    <th style="width: 5%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-href="/{{ user.id }}/{{ problem.id }}">
+                    <td>{{ problem.created_at | show_datetime }}</td>
+                    <td>{{ problem.last_time | show_datetime }}</td>
+                    <td>{{ problem.stage }}</td>
+                    <td>{{ problem.title }}</td>
+                    <td class="long_text">{{ problem.body }}</td>
+                    <td>...</td>
+                    <td><a class="btn btn-outline-success w-100" href="/{{ user.id }}/{{ problem.id }}/update"><i class="far fa-edit fa-lg"></i></a></td>
+                    <td><a class="btn btn-outline-danger w-100" href="/{{ user.id }}/{{ problem.id }}/delete" onclick="return confirm_delete()"><i class="fas fa-trash-alt fa-lg"></i></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-3 col-12 offset-md-1 mt-5">
+        <h2>☆ History ☆</h2>
+        <div class="mt-5 text-start"> 
+            <ul class="list-group">
+                {% for history in history_list %}
+                <li class="list-group-item">{{ history }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
 {% endblock %}

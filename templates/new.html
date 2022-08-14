@@ -5,22 +5,29 @@
 {% endblock %}
 
 {% block main %}
-    <h2>new</h2>
-    <form action="/{{ user.id }}/new" method="POST" class="mx-auto w-75 text-start">
-        <div class="mb-3">
-            <label class="form-label">Title</label>
-            <input autocomplete="off" autofocus class="form-control w-auto" id="title" name="title" placeholder="Title" type="text">
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Text of Problem</label>
-            <textarea class="form-control w-100" name="body" type="text" rows="4"></textarea>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Text of Answer</label>
-            <textarea class="form-control w-100" name="answer" type="text" rows="4"></textarea>
-        </div>
-        <div class="mb-3">
-            <button class="btn btn-primary" type="submit" >Register</button>
-        </div>
-    </form>
+<div class="row">
+    <div class="col-md-3 col-12 offset-md-1 mt-4">
+        <h2><i class="far fa-star"></i> New Problem <i class="far fa-star"></i></h2>
+    </div>
+
+    <div class="col-10 mx-auto mt-5">
+        <form action="/{{ user.id }}/new" method="POST" class="mx-auto w-100 text-start">
+            <div class="mb-3">
+                <label class="form-label">Title</label>
+                <input autocomplete="off" autofocus class="form-control w-auto" id="title" name="title" placeholder="Title" type="text" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Text of Problem</label>
+                <textarea class="form-control w-100" name="body" type="text" rows="7" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Text of Answer</label>
+                <textarea class="form-control w-100" name="answer" type="text" rows="7" required></textarea>
+            </div>
+            <div class="mb-3">
+                <button class="btn btn-primary w-25" type="submit"><i class="far fa-grin-squint"></i> Register <i class="far fa-grin-squint"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}

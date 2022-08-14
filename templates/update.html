@@ -5,23 +5,31 @@
 {% endblock %}
 
 {% block main %}
-    <h2>update</h2>
-    <div class="row">
-        <form action="/{{ user.id }}/{{ problem.id }}/update" method="POST" class="mx-auto w-75 text-start">
+<div class="row">
+    <div class="col-md-3 col-12 offset-md-1 pt-4">
+        <h2><i class="far fa-star"></i> Edit & Update <i class="far fa-star"></i></h2>
+    </div>
+    
+    <div class="col-10 mx-auto mt-5">
+        <form action="/{{ user.id }}/{{ problem.id }}/update" method="POST" class="mx-auto w-100 text-start">
             <div class="mb-3">
                 <label class="form-label">Title</label>
-                <input autocomplete="off" autofocus class="form-control w-auto" id="title" name="title" placeholder="Title" type="text" value={{ problem.title }}>
+                <input autocomplete="off" autofocus class="form-control w-auto" id="title" name="title" placeholder="Title" type="text" value={{ problem.title }} required>
             </div>
             <div class="mb-3">
                 <label class="form-label">Text of Problem</label>
-                <textarea class="form-control w-100" name="body" type="text" rows="4"> {{ problem.body }}</textarea>
+                <textarea class="form-control w-100" name="body" type="text" rows="7" required>{{ problem.body }}</textarea>
             </div>
             <div class="mb-3">
                 <label class="form-label">Text of Answer</label>
-                <textarea class="form-control w-100" name="answer" type="text" rows="4" > {{ problem.answer }}</textarea>
+                <textarea class="form-control w-100" name="answer" type="text" rows="7" required>{{ problem.answer }}</textarea>
             </div>
-            <button class="btn btn-primary" type="submit">Update</button>
+            <div class="mb-3">
+                <button class="btn btn-success w-25" type="submit"><i class="far fa-grin-alt"></i> Update <i class="far fa-grin-alt"></i></button>
+            </div>
         </form>
+    </div>
+        
     </div>
     
 {% endblock %}

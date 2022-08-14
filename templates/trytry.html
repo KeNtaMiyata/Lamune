@@ -5,37 +5,59 @@
 {% endblock %}
 
 {% block main%}
-<h2>Try</h2>
+<div class="row">
+    <div class="col-md-3 col-12 offset-md-1 mt-4">
+        <h2><i class="far fa-star"></i> Try <i class="far fa-star"></i></h2>
+    </div>
 
+    <div class="col-md-3 offset-md-1 mt-5 d-none d-md-block">
+        <a href="/{{ user.id }}/{{ problem.id }}/tasks" class="btn btn-outline-dark btn--radius btn--cubic d-none d-md-block"><i class="fas fa-angle-double-right fa-position-left"></i> Back to Tasks <i class="fas fa-angle-double-left fa-position-right"></i></a>
+    </div>
 
-<p>最後に解いた日　{{ problem.last_time }}</p>
+    <div class="col-md-3 mx-auto mt-5 d-none d-md-block">
+        <a href="/{{user.id}}/tasks" class="btn btn-outline-dark btn--radius btn--cubic d-none d-md-block"><i class="fas fa-angle-double-right fa-position-left"></i> Back to Index<i class="fas fa-angle-double-left fa-position-right"></i></a>
+    </div>
 
+</div>
 
-<p>{{ problem.title }}</p>
+<div class="row">
+    <div class="col-10 mx-auto mt-5 text-start">
+        <p>Last Date : {{ problem.last_time }}</p>
+        
+        <p>Title : {{ problem.title }}</p>
+        
+        <div class="problem_box long_text">
+            <p>{{ problem.body }}</p>
+        </div>
+    </div>
 
-
-<!-- スタートボタンをおしたら以下が表示される -->
-<p>{{ problem.body }}</p>
 
 <!-- ボタンを押したら以下が表示 -->
-<!-- 経過時間を表示 -->
-<input type="button" value="Show or Hide Answer" onclick="show_answer()" />
-<textarea id="show_answer" class="w-100" rows="4">{{ problem.answer }}</textarea>
+    <div class="col-10 mx-auto mt-3 text-start">
+        <input type="button" class="btn btn-outline-primary" value="Check or Hide Answer" onclick="show_answer()" />
+        <div id="show_answer" class="problem_box long_text" rows="4">
+            <p>{{ problem.answer }}</p>
+        </div>
+    </div>
 
-<form action="/{{ user.id }}/{{ problem.id }}/trytry" method="POST" class="mx-auto w-75 text-start">
-    <div class="form-check mb-3">
-        <input class="form-check-input" name="result" type="radio" value="Correct" checked>
-        <label class="form-check-label">Correct</label>
+    <div class="col-md-3 col-6 offset-md-1 mt-5">
+        <h2>Submit Today Result </h2>
+        <form action="/{{ user.id }}/{{ problem.id }}/trytry" method="POST" class="mx-auto mt-5 w-75 text-start">
+            <div class="form-check mb-3">
+                <input class="form-check-input" name="result" type="radio" value="Correct" checked>
+                <label class="form-check-label">Correct</label>
+            </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" name="result" type="radio" value="Incorrect">
+                <label class="form-check-label">Incorrect</label>
+            </div>
+            <div>
+                <button class="btn btn-primary w-50" type="submit" ><i class="fas fa-fighter-jet"></i> Submit</button>
+            </div>
+        </form>
     </div>
-    <div class="form-check">
-        <input class="form-check-input" name="result" type="radio" value="Incorrect">
-        <label class="form-check-label">Incorrect</label>
-    </div>
-    <div class="mb-3">
-        <button class="btn btn-primary" type="submit" >Submit</button>
-    </div>
-</form>
-
+</div>
+    
 {% endblock %}
 
 
@@ -44,15 +66,15 @@
     document.getElementById("show_answer").style.display ="none";
     
     function show_answer(){
-    const answer = document.getElementById("show_answer");
-    if(answer.style.display=="block"){
-        // noneで非表示
-        answer.style.display ="none";
-    }else{
-        // blockで表示
-        answer.style.display ="block";
+        const answer = document.getElementById("show_answer");
+        if(answer.style.display=="block"){
+            // noneで非表示
+            answer.style.display ="none";
+        }else{
+            // blockで表示
+            answer.style.display ="block";
+        }
     }
-}
 </script>
 {% endblock %}
 
