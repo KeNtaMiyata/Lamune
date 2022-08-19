@@ -55,7 +55,7 @@ main{
 }
 
 h1, h2, h3, .navbar-brand, .nav-link, form, .btn{
-    font-family: "Segoe Print", sans-serif;
+    font-family: Chalkduster, "Bradley Hand", "Segoe Print", sans-serif;
 }
 
 .navbar-brand{
