@@ -26,7 +26,7 @@ db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-app.permanent_session_lifetime = datetime.timedelta(minutes=5) 
+app.permanent_session_lifetime = datetime.timedelta(minutes=60) 
 
 
 # models
@@ -88,6 +88,10 @@ def unauthorized(error):
 @app.route("/", methods=["GET"])
 def top():
     return render_template("top.html", user=current_user)
+
+@app.route("/howto", methods=["GET"])
+def howto():
+    return render_template("howto.html", user=current_user)
 
 
 @app.route("/signup", methods=["GET", "POST"])

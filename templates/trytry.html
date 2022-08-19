@@ -6,7 +6,7 @@
 
 {% block main%}
 <div class="row">
-    <div class="col-md-3 col-12 offset-md-1 mt-4">
+    <div class="col-xl-3 col-md-4 col-12 offset-md-1 mt-4">
         <h2><i class="far fa-star"></i> Try <i class="far fa-star"></i></h2>
     </div>
 
@@ -22,10 +22,17 @@
 
 <div class="row">
     <div class="col-10 mx-auto mt-5 text-start">
-        <p>Last Date : {{ problem.last_time }}</p>
-        
-        <p>Title : {{ problem.title }}</p>
-        
+        <table class="table text-start">
+            <tbody>
+                <tr>
+                    <td>Last Try</td><td>{{ problem.last_time | show_datetime }}</td>
+                </tr>
+                <tr>
+                    <td>Title</td><td>{{ problem.title }}</td>
+                </tr>
+            </tbody>
+        </table>
+
         <div class="problem_box long_text">
             <p>{{ problem.body }}</p>
         </div>
@@ -35,12 +42,12 @@
 <!-- ボタンを押したら以下が表示 -->
     <div class="col-10 mx-auto mt-3 text-start">
         <input type="button" class="btn btn-outline-primary" value="Check or Hide Answer" onclick="show_answer()" />
-        <div id="show_answer" class="problem_box long_text" rows="4">
+        <div id="show_answer" class="problem_box long_text" rows="">
             <p>{{ problem.answer }}</p>
         </div>
     </div>
 
-    <div class="col-md-3 col-6 offset-md-1 mt-5">
+    <div class="col-xl-3 col-md-4 col-12 offset-md-1 mt-5">
         <h2>Submit Today Result </h2>
         <form action="/{{ user.id }}/{{ problem.id }}/trytry" method="POST" class="mx-auto mt-5 w-75 text-start">
             <div class="form-check mb-3">
@@ -52,7 +59,7 @@
                 <label class="form-check-label">Incorrect</label>
             </div>
             <div>
-                <button class="btn btn-primary w-50" type="submit" ><i class="fas fa-fighter-jet"></i> Submit</button>
+                <button class="btn btn-primary col-12" type="submit" ><i class="fas fa-fighter-jet"></i> Submit</button>
             </div>
         </form>
     </div>

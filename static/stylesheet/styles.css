@@ -9,7 +9,16 @@ a{
 }
 
 html {
-    height: 100%;
+    height: auto;
+}
+
+.container-fluid{
+    padding: 0 10px;
+}
+
+.row{
+    margin-left: 0;
+    margin-right: 0;
 }
 
 body{
@@ -19,12 +28,34 @@ body{
     background-image: url(../images/lamune_side_back.jpg);
 }
 
-
-
 main{
+    height: 90%;
+}
+
+.main-content{
     /* background-image: url(../images/background_glucose.png); */
     background-color: #ffffff;
-    height: 90%;
+}
+
+.top{
+    background-image: url(../images/ramune.jpg);
+    background-size: cover;
+    background-position: center;
+    padding: 0;
+}
+
+.top-content{
+    background-color: rgba( 255, 255, 255, 0.5);
+    height: 100%;
+}
+
+.other-content{
+    background-color: rgba( 255, 255, 255, 0.9);
+    height: 100%;
+}
+
+h1, h2, h3, .navbar-brand, .nav-link, form, .btn{
+    font-family: "Segoe Print", sans-serif;
 }
 
 .navbar-brand{
@@ -32,8 +63,9 @@ main{
     font-size: 1.5rem
 }
 
-h1, h2, h3, .navbar-brand, .nav-link, .btn{
-    font-family:"Segoe Print", sans-serif;
+h1{
+    font-size: 70px;
+
 }
 
 h2 {
@@ -56,10 +88,6 @@ h2:before {
     border-right: 3px solid black;
     background-color: white;
     content: "";
-}
-
-h1{
-    font-size: 60px;
 }
 
 .problem_box{
@@ -90,8 +118,3 @@ h1{
     height: 100%;
 }
 
- /* ▼リンクの上にマウスが載った際の装飾(背景色だけ指定) */
-.index tr.clickable:hover td {
-    background-color: #fcfcaa;
-    cursor: pointer;
-}

@@ -6,7 +6,7 @@
 
 {% block main %}
 <div class="row">
-    <div class="col-md-3 col-12 offset-md-1 pt-4">
+    <div class="col-xl-3 col-md-4 col-12 offset-md-1 pt-4">
         <h2><i class="far fa-star"></i> Edit & Update <i class="far fa-star"></i></h2>
     </div>
     
@@ -25,11 +25,10 @@
                 <textarea class="form-control w-100" name="answer" type="text" rows="7" required>{{ problem.answer }}</textarea>
             </div>
             <div class="mb-3">
-                <button class="btn btn-success w-25" type="submit"><i class="far fa-grin-alt"></i> Update <i class="far fa-grin-alt"></i></button>
+                <button class="btn btn-success col-md-4 col-12" type="submit"><i class="far fa-grin-alt"></i> Update <i class="far fa-grin-alt"></i></button>
             </div>
         </form>
     </div>
         
-    </div>
-    
+</div>    
 {% endblock %}

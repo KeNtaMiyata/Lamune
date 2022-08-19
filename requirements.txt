@@ -1,2 +1,9 @@
-Flask
-Flask-Session
+flask
+flask_sqlalchemy
+flask_login
+flask_session
+werkzeug.security
+datetime
+os
+pytz
+gunicorn

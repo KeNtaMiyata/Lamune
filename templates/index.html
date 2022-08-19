@@ -6,24 +6,24 @@
 
 {% block main %}
 <div class="row">
-    <div class="col-md-3 col-12 offset-md-1 mt-4">
-        <h2><i class="far fa-star"></i> Problem Index <i class="far fa-star"></i></h2>
+    <div class="col-xl-3 col-md-4 col-12 offset-md-1 mt-4">
+        <h2><i class="far fa-star"></i>Problem Index<i class="far fa-star"></i></h2>
     </div>
 
     <div class="col-md-3 offset-md-1 mt-5 d-none d-md-block">
-        <a href="/{{user.id}}/new" class="btn btn-outline-dark btn--radius btn--cubic d-none d-md-block"><i class="fas fa-angle-double-right fa-position-left"></i> Register New Problem <i class="fas fa-angle-double-left fa-position-right"></i></a>
+        <a href="/{{user.id}}/new" class="btn btn-outline-dark btn--radius btn--cubic d-none d-md-block"><i class="fas fa-angle-double-right fa-position-left"></i> New Problem <i class="fas fa-angle-double-left fa-position-right"></i></a>
     </div>
 
     <div class="col-md-3 mx-auto mt-5 d-none d-md-block">
-        <a href="/{{user.id}}/tasks" class="btn btn-outline-dark btn--radius btn--cubic d-none d-md-block"><i class="fas fa-angle-double-right fa-position-left"></i> Try Today's Tasks <i class="fas fa-angle-double-left fa-position-right"></i></a>
+        <a href="/{{user.id}}/tasks" class="btn btn-outline-dark btn--radius btn--cubic d-none d-md-block"><i class="fas fa-angle-double-right fa-position-left"></i> Try Tasks <i class="fas fa-angle-double-left fa-position-right"></i></a>
     </div>
 
     <div class="col-11 mx-auto mt-4">
-        <table class="table table-striped text-start index">
+        <table class="table table-striped text-start index d-none d-md-block">
             <thead>
                 <tr>
-                    <th style="width: 10%">Creation Date</th>
-                    <th style="width: 10%">Last Tried Date</th>
+                    <th style="width: 10%">Creation</th>
+                    <th style="width: 10%">Last Try</th>
                     <th style="width: 5%">Stage</th>
                     <th style="width: 10%">Title</th>
                     <th style="width: 15%">Content</th>
@@ -42,20 +42,61 @@
                     <td>{{ problem.last_time | show_datetime }}</td>
                     <td>{{ problem.stage }}</td>
                     <td>{{ problem.title }}</td>
-                    <td id="long_text">
+                    <td>
                         <script>
                             long_text({{ problem.body |tojson }});
                         </script>
                     </td>
                     <td>...</td>
-                    <td><a class="btn btn-outline-dark w-100" href="/{{ user.id }}/{{ problem.id }}"><i class="fas fa-search me-1"></i>Show</a></td>
-                    <td><a class="btn btn-outline-primary w-100" href="/{{ user.id }}/{{ problem.id }}/trytry"><i class="fas fa-pencil-alt me-1"></i>Try</a></td>
-                    <td><a class="btn btn-outline-success w-100" href="/{{ user.id }}/{{ problem.id }}/update"><i class="far fa-edit me-1"></i>Edit</a></td>
-                    <td><a class="btn btn-outline-danger w-100" href="/{{ user.id }}/{{ problem.id }}/delete" onclick="return confirm_delete()"><i class="fas fa-trash-alt me-1"></i>Delete</a></td>
+                    <td><a class="btn btn-outline-dark w-100" href="/{{ user.id }}/{{ problem.id }}"><i class="fas fa-search me-1"></i><span class="d-none d-md-block">Show</span></a></td>
+                    <td><a class="btn btn-outline-primary w-100" href="/{{ user.id }}/{{ problem.id }}/trytry"><i class="fas fa-pencil-alt me-1"></i><span class="d-none d-md-block">Try</span></a></td>
+                    <td><a class="btn btn-outline-success w-100" href="/{{ user.id }}/{{ problem.id }}/update"><i class="far fa-edit me-1"></i><span class="d-none d-md-block">Edit</span></a></td>
+                    <td><a class="btn btn-outline-danger w-100" href="/{{ user.id }}/{{ problem.id }}/delete" onclick="return confirm_delete()"><i class="fas fa-trash-alt me-1"></i><span class="d-none d-md-block">Delete</span></a></td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+        
+        
+        {% for problem in problems %}
+        <div class="problem_box d-block d-md-none">
+            <table class="table text-start index">
+                <tbody>
+                    <tr>
+                        <td>Creation</td><td>{{ problem.created_at | show_datetime }}</td>
+                    </tr>
+                    <tr>
+                        <td>Last Try</td><td>{{ problem.last_time | show_datetime }}</td>
+                    </tr>
+                    <tr>
+                        <td>Stage</td><td>{{ problem.stage }}</td>
+                    </tr>
+                    <tr>
+                        <td>Title</td><td><script>long_text({{ problem.title | tojson }});</script></td>
+                    </tr>
+                    <tr>
+                        <td>Content</td><td><script>long_text({{ problem.body | tojson }});</script></td>
+                    </tr>
+                    <tr class="w-100">
+                        <td class="w-50">
+                            <a class="btn btn-outline-dark w-100" href="/{{ user.id }}/{{ problem.id }}"><i class="fas fa-search me-1"></i><span class="d-none d-md-block">Show</span></a>
+                        </td>
+                        <td class="w-50">
+                            <a class="btn btn-outline-primary w-100" href="/{{ user.id }}/{{ problem.id }}/trytry"><i class="fas fa-pencil-alt me-1"></i><span class="d-none d-md-block">Try</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="w-50">
+                            <a class="btn btn-outline-success w-100" href="/{{ user.id }}/{{ problem.id }}/update"><i class="far fa-edit me-1"></i><span class="d-none d-md-block">Edit</span></a>
+                        </td>
+                        <td>
+                            <a class="btn btn-outline-danger w-100" href="/{{ user.id }}/{{ problem.id }}/delete" onclick="return confirm_delete()"><i class="fas fa-trash-alt me-1"><span class="d-none d-md-block">Delete</span></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

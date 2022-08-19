@@ -5,17 +5,16 @@
 {% endblock %}
 
 {% block main %}
-    <div class="col-md-3 col-12 offset-md-1 pt-4">
+    <div class="col-lg-3 col-md-4 col-12 offset-md-1 pt-4">
         <h2><i class="far fa-star"></i> Tasks <i class="far fa-star"></i></h2>
     </div>
 
-    
     <div class="col-11 mx-auto mt-5">
-        <table class="table table-striped text-start index">
+        <table class="table table-striped text-start index d-none d-md-block">
             <thead>
                 <tr>
-                    <th style="width: 10%">Creation Date</th>
-                    <th style="width: 10%">Last Tried Date</th>
+                    <th style="width: 10%">Creation</th>
+                    <th style="width: 10%">Last Try</th>
                     <th style="width: 10%">Title</th>
                     <th style="width: 5%">Stage</th>
                     <th style="width: 25%">Content</th>
@@ -36,11 +35,38 @@
                         </script>
                     </td>
                     <td>...</td>
-                    <td><a class="btn btn-outline-primary w-100" href="/{{ user.id }}/{{ problem.id }}/trytry"><i class="fab fa-angellist"></i> Try the problem</a></td>
+                    <td><a class="btn btn-outline-primary w-100" href="/{{ user.id }}/{{ problem.id }}/trytry"><i class="fab fa-angellist"></i> Try This</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+
+        {% for problem in problems %}
+        <div class="problem_box d-block d-md-none">
+            <table class="table text-start index">
+                <tbody>
+                    <tr>
+                        <td>Creation</td><td>{{ problem.created_at | show_datetime }}</td>
+                    </tr>
+                    <tr>
+                        <td>Last Try</td><td>{{ problem.last_time | show_datetime }}</td>
+                    </tr>
+                    <tr>
+                        <td>Stage</td><td>{{ problem.stage }}</td>
+                    </tr>
+                    <tr>
+                        <td>Title</td><td><script>long_text({{ problem.title | tojson }});</script></td>
+                    </tr>
+                    <tr>
+                        <td>Content</td><td><script>long_text({{ problem.body | tojson }});</script></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="w-100">
+                <a class="btn btn-outline-primary w-100" href="/{{ user.id }}/{{ problem.id }}/trytry"><i class="fab fa-angellist"></i> Try the problem</a>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 
     
