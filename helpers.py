@@ -1,4 +1,6 @@
 from flask import render_template
+from flask_login import current_user
+
 
 def apology(message, code=400):
     """Render message as an apology to user."""
@@ -15,7 +17,7 @@ def apology(message, code=400):
             s = s.replace(old, new)
         return s
         
-    return render_template("apology.html", top=code, bottom=escape(message)), code
+    return render_template("apology.html", top=code, bottom=escape(message), user=current_user), code
 
 
 def show_datetime(t):

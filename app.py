@@ -83,7 +83,7 @@ def unauthorized(error):
 @app.errorhandler(404)
 def unauthorized(error):
     # unauthorized error のときトップページに戻る
-    return apology("top.html", 404)
+    return apology("Session timeout. Please Login one more time", 401)
 
 @app.route("/", methods=["GET"])
 def top():
@@ -109,7 +109,7 @@ def signup():
 
         elif not request.form.get("confirmation"):
             # return redirect("/signup")
-            return apology("must provide password", 403)
+            return apology("must provide confirmation", 403)
 
         name = request.form.get("username")
         password = request.form.get("password")
@@ -117,7 +117,7 @@ def signup():
 
         if password != confirmation:
             # return redirect("/signup")
-            return apology("Password and confirmation are not same", 400)
+            return apology("Password and confirmation are not the same", 400)
 
         users = User.query.all()
         if name in [person.name for person in users]:
@@ -159,14 +159,14 @@ def login():
 
         user = User.query.filter_by(name=name).first()
         if not user:
-            return apology("must provide valid username", 403)
+            return apology("must provide Valid username", 403)
 
         if check_password_hash(user.password, password):
             login_user(user)
             user_id = user.id
             return redirect(f"/{ user_id }/index")
 
-        return apology("foo", 403)
+        return apology("must provide Valid password", 403)
 
     else:
         return render_template("login.html", user=current_user)
@@ -183,7 +183,7 @@ def logout():
 @login_required
 def index(user_id):
     if user_id != current_user.id:
-        return apology("foo", 403)
+        return apology("You can't look this page! Get out!", 401)
 
     my_problems = Problem.query.filter_by(user_id=user_id).all()
     user = current_user
@@ -194,21 +194,21 @@ def index(user_id):
 @login_required
 def new(user_id):
     if user_id != current_user.id:
-        return apology("foo", 403)
+        return apology("You can't look this page! Get out!", 401)
 
     if request.method == "POST":
 
         if not request.form.get("title"):
             print(1)
-            return apology("foo", 403)
+            return apology("must provide title", 403)
 
         elif not request.form.get("body"):
             print(2)
-            return apology("foo", 403)
+            return apology("must provide content", 403)
 
         elif not request.form.get("answer"):
             print(3)
-            return apology("foo", 403)
+            return apology("must provide answer", 403)
 
         # user_id = current_user.id
         title = request.form.get("title")
@@ -232,12 +232,12 @@ def new(user_id):
 @login_required
 def show(user_id, problem_id):
     if user_id != current_user.id:
-        return apology("foo", 403)
+        return apology("You can't look this page! Get out!", 401)
 
     problem = Problem.query.get(problem_id)
     # ないはずのIDをURLに手打ちした時Internal Server Error
     if not problem:
-        return apology("no problem", 404)
+        return apology("No such problem", 404)
 
     user = current_user
     if problem.solved_history:
@@ -251,7 +251,7 @@ def show(user_id, problem_id):
 @login_required
 def update(user_id, problem_id):
     if user_id != current_user.id:
-        return apology("foo", 403)
+        return apology("You can't look this page! Get out!", 401)
 
     problem = Problem.query.get(problem_id)
 
@@ -259,15 +259,15 @@ def update(user_id, problem_id):
 
         if not request.form.get("title"):
             print(1)
-            return apology("foo", 403)
+            return apology("must provide title", 403)
 
         elif not request.form.get("body"):
             print(2)
-            return apology("foo", 403)
+            return apology("must provide content", 403)
 
         elif not request.form.get("answer"):
             print(3)
-            return apology("foo", 403)
+            return apology("must provide answer", 403)
 
         problem.title = request.form.get("title")
         problem.body = request.form.get("body")
@@ -286,7 +286,7 @@ def update(user_id, problem_id):
 @login_required
 def delete(user_id, problem_id):
     if user_id != current_user.id:
-        return apology("foo", 403)
+        return apology("You can't look this page! Get out!", 401)
 
     problem = Problem.query.get(problem_id)
     db.session.delete(problem)
@@ -298,7 +298,7 @@ def delete(user_id, problem_id):
 @login_required
 def trytry(user_id, problem_id):
     if user_id != current_user.id:
-        return apology("foo", 403)
+        return apology("You can't look this page! Get out!", 401)
 
     elif request.method == "POST":
         problem = Problem.query.get(problem_id)
@@ -336,7 +336,7 @@ def trytry(user_id, problem_id):
 @login_required
 def tasks(user_id):
     if user_id != current_user.id:
-        return apology("foo", 403)
+        return apology("You can't look this page! Get out!", 401)
 
     tasks = []
     my_problems = Problem.query.filter_by(user_id=user_id).all()

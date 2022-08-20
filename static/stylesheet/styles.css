@@ -25,8 +25,9 @@ body{
 }
 
 main{
-    min-height: 90vh;
+    min-height: 80vh;
     background-color: #ffffff;
+    margin: 0;
 }
 
 .top{
@@ -39,6 +40,24 @@ main{
 .top-content{
     background-color: rgba( 255, 255, 255, 0.5);
     height: 100%;
+}
+
+.husen{
+    padding: 0.5em 1em;
+    margin: 2em 0;
+    color: #232323;
+    background: #fff8e8;
+    border-left: solid 10px #ffc06e;
+}
+
+.husen li {
+    font-size: 16px;
+    margin: 0; 
+    padding: 0;
+}
+
+.top_bottom{
+    font-size: 32px;
 }
 
 /* .other-content{
@@ -107,3 +126,48 @@ h2:before {
 }
 
 
+.apology_picture{
+    background-image: url(../images/apology.jpg);
+    height: 50vh;
+    background-size: contain;
+    background-position: center;
+}
+
+.hukidashi {
+    position: relative;
+    padding: 0.5em 0.7em;
+    margin: 2em 0;
+    background: #e6f4ff;
+    color: #5c98d4;
+    font-weight: bold;
+}
+
+.hukidashi:after {
+    position: absolute;
+    content: '';
+    top: 100%;
+    left: 30px;
+    border: 15px solid transparent;
+    border-top: 15px solid #e6f4ff;
+    width: 0;
+    height: 0;
+}
+
+.hukidashi p {
+    font-size: 32px;
+    margin: 0; 
+    padding: 0;
+}
+
+.notice{
+    padding: 0.2em 0.5em;
+    margin: 2em 0;
+    background: #d6ebff;
+    box-shadow: 0px 0px 0px 10px #d6ebff;
+    border: dashed 2px white;
+}
+.notice p {
+    font-size: 32px;
+    margin: 0; 
+    padding: 0;
+}

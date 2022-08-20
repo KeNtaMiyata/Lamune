@@ -1,5 +1,20 @@
-apology
+{% extends "layout.html" %}
 
-{{top}}
+{% block title %}
+    Apology
+{% endblock %}
 
-{{bottom}}
+{% block main %}
+    <div class="pt-3">
+        <div class="hukidashi w-50 mx-auto">
+            <p>エラーコード　{{ top }} 番だよ。</p>
+        </div>
+
+        <div class="w-75 mx-auto apology_picture">
+        </div>
+
+        <div class="notice w-50 mx-auto">
+            <p>{{ bottom }}</p>
+        </div>
+    </div>
+{% endblock %}
