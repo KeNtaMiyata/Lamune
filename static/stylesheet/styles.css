@@ -8,10 +8,6 @@ a{
     text-decoration: none;
 }
 
-html {
-    height: auto;
-}
-
 .container-fluid{
     padding: 0 10px;
 }
@@ -29,11 +25,7 @@ body{
 }
 
 main{
-    height: 90%;
-}
-
-.main-content{
-    /* background-image: url(../images/background_glucose.png); */
+    min-height: 90vh;
     background-color: #ffffff;
 }
 
@@ -49,12 +41,12 @@ main{
     height: 100%;
 }
 
-.other-content{
-    background-color: rgba( 255, 255, 255, 0.9);
+/* .other-content{
+    background-color: rgba( 255, 255, 255, 0.5);
     height: 100%;
-}
+} */
 
-h1, h2, h3, .navbar-brand, .nav-link, form, .btn{
+h1, h2, h3, .navbar-brand, .nav-link, .btn{
     font-family: Chalkduster, "Bradley Hand", "Segoe Print", sans-serif;
 }
 
@@ -114,7 +106,4 @@ h2:before {
     white-space: pre-wrap; /*Textareaで保存したテキストの改行を表示させる方法 */
 }
 
-.fullheight {
-    height: 100%;
-}
 

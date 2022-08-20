@@ -14,7 +14,7 @@
 
     <body>
         <header>
-        <div class="container-fluid fullheight">
+        <div class="container-fluid">
             <div class="row">
                     <nav class="nav-bar navbar-expand-md navbar-light bg-primary bg-opacity-75">
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +31,7 @@
                                 <li class="nav-item mx-2"><a class ="nav-link text-light" href="/logout"><i class="fas fa-sign-out-alt me-1"></i>Log out</a></li>
                                 <!-- <li class="nav-itemk mx-2"><a class ="nav-link text-light" href=""></a></li> -->
                                 {% endif %}
-                                <li class="nav-itemk mx-2"><a class ="nav-link text-light" href="/howto"><i class="far fa-question-circle me-1"></i>Help</a></li>
+                                <li class="nav-item mx-2"><a class ="nav-link text-light" href="/howto"><i class="far fa-question-circle me-1"></i>Help</a></li>
                             </ul>
                         </div>
                     </nav>
@@ -39,14 +39,21 @@
             </div>
         </header>
         <main>
-            <div class="container-fluid fullheight main-content">
-                <div class="other-content text-center">
+            <div class="other-content text-center">
+                <div class="container-fluid">
                 {% block main %}{% endblock %}
                 </div>
             </div>
         </main>
         <footer>
-            
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 bg-secondary text-center pt-3">
+                        <p class="text-light" >Copyright <i class="far fa-copyright"></i> 2022 KeNtaMiyata</p>
+                        <p><a class ="nav-link text-light" href="https://github.com/KeNtaMiyata/Lamune"><i class="fab fa-github"></i></a></p>
+                    </div>
+                </div>
+            </div>
         </footer>
     </body>
         {% block js %}{% endblock %}
