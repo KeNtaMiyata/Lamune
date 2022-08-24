@@ -1,0 +1,20 @@
+CREATE TABLE user (
+        id INTEGER NOT NULL,
+        name VARCHAR(15) NOT NULL,
+        password VARCHAR(20) NOT NULL,
+        PRIMARY KEY (id),
+        UNIQUE (name)
+);
+CREATE TABLE problem (
+        id INTEGER NOT NULL,
+        user_id INTEGER NOT NULL,
+        title VARCHAR(50) NOT NULL,
+        body VARCHAR(500) NOT NULL,
+        answer VARCHAR(500) NOT NULL,
+        stage INTEGER,
+        last_time DATETIME NOT NULL,
+        created_at DATETIME NOT NULL,
+        solved_history VARCHAR,
+        PRIMARY KEY (id),
+        FOREIGN KEY(user_id) REFERENCES user (id)
+);
