@@ -96,7 +96,7 @@ def top():
 
 @app.route("/howto", methods=["GET"])
 def howto():
-    return render_template("howto.html", user=current_user)
+    return apology("This page is not ready yet", 404)
 
 
 @app.route("/signup", methods=["GET", "POST"])

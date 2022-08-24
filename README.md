@@ -24,9 +24,6 @@
 - history機能もあったらいいかな
 
 ---
-## Detail
-
----
 ## MileStone
 - deadline: 2022/8/15(2week)
 
