@@ -26,7 +26,12 @@ db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-app.permanent_session_lifetime = datetime.timedelta(minutes=60) 
+@app.before_request
+def before_request():
+    # リクエストのたびにセッションの寿命を更新する
+    session.permanent = True
+    app.permanent_session_lifetime = datetime.timedelta(minutes=30)
+    session.modified = True
 
 
 # models
