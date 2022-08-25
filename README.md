@@ -1,6 +1,9 @@
 # README
+#### Video Demo: https://youtu.be/XKj35FnNUNI
+
 ---
 ## News
+- 2002/08/23 completed design
 - 2022/08/10 completed base of the project
 - 2022/08/03 launch this project
 
