@@ -64,9 +64,10 @@ class Problem(db.Model):
 # stage passed time list
 stage_list = [
     datetime.timedelta(seconds=1),
-    datetime.timedelta(seconds=15),
-    datetime.timedelta(seconds=15),
-    datetime.timedelta(seconds=20),
+    # datetime.timedelta(seconds=15),
+    # datetime.timedelta(seconds=15),
+    # datetime.timedelta(seconds=20),
+    datetime.timedelta(minutes=15),
     # datetime.timedelta(hours=3),
     # datetime.timedelta(days=1),
     # datetime.timedelta(days=3),
