@@ -21,4 +21,4 @@ def apology(message, code=400):
 
 
 def show_datetime(t):
-    return t.strftime('%Y-%m-%d %H:%M')
+    return t.strftime('%Y-%m-%d')

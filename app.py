@@ -10,7 +10,13 @@ from helpers import apology, show_datetime
 
 app = Flask(__name__)
 
+# sqlite3
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lamune.db'
+
+# PostgreSQL
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/postgres'
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config["TEMPLATES_AUTO_RELOAD"] = True # Ensure templates are auto-reloaded
 
